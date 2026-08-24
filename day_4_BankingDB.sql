@@ -264,3 +264,38 @@ WHERE Phone IS NULL;
 SELECT *
 FROM Customers
 WHERE Email IS NOT NULL;
+
+use bankingdb;
+
+SELECT AccountID,
+       Balance,
+       CASE
+           WHEN Balance >= 50000 THEN 'Premium Account'
+           WHEN Balance >= 25000 THEN 'Standard Account'
+           ELSE 'Basic Account'
+       END AS AccountCategory
+FROM Accounts;
+
+SELECT AccountID,
+       Balance,
+       RANK() OVER (ORDER BY Balance DESC) AS BalanceRank
+FROM Accounts;
+
+SELECT TransactionID,
+       Amount,
+       SUM(Amount) OVER (ORDER BY TransactionDate) AS RunningTotal
+FROM Transactions;
+
+SELECT TransactionID,
+       Amount,
+       AVG(Amount) OVER () AS AverageTransaction
+FROM Transactions;
+
+select * from transactions;
+
+insert into transactions values 
+(301,'2025-05-10',5000,'Deposit',201),
+(303,'2025-05-12',10000,'Deposit',203),
+(304,'2025-05-13',3000,'Withdraw',204),
+(305,'2025-05-14',7000,'Deposit',205);
+
